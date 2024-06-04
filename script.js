@@ -1,58 +1,51 @@
-// Guardar el estado de la página web en localStorage
-window.addEventListener('beforeunload', function() {
-  localStorage.setItem('pageState', JSON.stringify(getPageState()));
-});
-
-// Cargar el estado de la página web desde localStorage al cargar la página
-window.addEventListener('load', function() {
-  const pageState = JSON.parse(localStorage.getItem('pageState'));
-  if (pageState) {
-    setPageState(pageState);
+// Función para manejar la opacidad de la celda al hacer clic
+function toggleCellOpacity(cell) {
+  if (cell.style.opacity === '0.5') {
+    cell.style.opacity = '1';
+  } else {
+    cell.style.opacity = '0.5';
   }
+}
+
+// Función para guardar y cargar el estado de las opacidades en localStorage
+function saveCellOpacities() {
+  const cellOpacities = {};
+  const cells = document.querySelectorAll('.cell');
+
+  cells.forEach(cell => {
+    cellOpacities[cell.id] = cell.style.opacity;
+  });
+
+  localStorage.setItem('cellOpacities', JSON.stringify(cellOpacities));
+}
+
+function loadCellOpacities() {
+  const cellOpacities = JSON.parse(localStorage.getItem('cellOpacities'));
+
+  if (cellOpacities) {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+      if (cellOpacities[cell.id]) {
+        cell.style.opacity = cellOpacities[cell.id];
+      }
+    });
+  }
+}
+
+// Event listener para guardar el estado al salir de la página
+window.addEventListener('beforeunload', function() {
+  saveCellOpacities();
 });
 
-// Función para obtener el estado actual de la página web
-function getPageState() {
-  const state = {
-    inputValue: document.getElementById('myInput').value, // Ejemplo: capturar el valor de un campo de entrada
-    cellOpacityValues: getCellOpacityValues()
-  };
-  
-  return state;
-}
-
-// Función para establecer el estado de la página web
-function setPageState(state) {
-  document.getElementById('myInput').value = state.inputValue; // Ejemplo: establecer el valor de un campo de entrada
-  setCellOpacityValues(state.cellOpacityValues);
-}
-
-// Función para capturar los valores de opacidad de las celdas
-function getCellOpacityValues() {
-  const cells = document.querySelectorAll('.cell');
-  const opacityValues = [];
-  
-  cells.forEach(cell => {
-    opacityValues.push(cell.style.opacity);
-  });
-  
-  return opacityValues;
-}
-
-// Función para establecer los valores de opacidad de las celdas
-function setCellOpacityValues(opacityValues) {
-  const cells = document.querySelectorAll('.cell');
-  
-  cells.forEach((cell, index) => {
-    cell.style.opacity = opacityValues[index];
-  });
-}
+// Event listener para cargar el estado al cargar la página
+window.addEventListener('load', function() {
+  loadCellOpacities();
+});
 
 const cells = document.querySelectorAll('.cell');
-const imagen = document.getElementById('imagen');
-
 cells.forEach(cell => {
-  cell.addEventListener('click', () => {
-    cell.style.opacity = 0; // Oculta la celda al cambiar la opacidad
+  cell.addEventListener('click', function() {
+    toggleCellOpacity(cell);
+    saveCellOpacities();
   });
 });
