@@ -1,9 +1,9 @@
 // Función para manejar la opacidad de la celda al hacer clic
 function toggleCellOpacity(cell) {
-  if (cell.style.opacity === '0.5') {
-    cell.style.opacity = '1';
+  if (cell.style.opacity === '0') {
+    cell.style.opacity = '0';
   } else {
-    cell.style.opacity = '0.5';
+    cell.style.opacity = '0';
   }
 }
 
