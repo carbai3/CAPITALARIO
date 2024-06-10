@@ -8,14 +8,17 @@
 </head>
 
 <body>
-    
-    <div id = "main-container">
-        <h1>CAPITALARIO PARA LA <br>CONQUISTA DE NUESTRA SEDE</h1>
-    
-    <img src="Mater.webp" alt="Imagen" id="imagen">
-    <div id="container">  
+    <h1>CAPITALARIO PARA LA <br>CONQUISTA DE NUESTRA SEDE</h1>
+    <h2>Nuestro Fundador nos dice "Schoenstatt se cae o se levanta segun el capital de gracias"</h2>
+    <div id="main-container">
+        
+        <div id="image-container">
+            <img src="Mater.webp" alt="Imagen" id="imagen">
+            <div id="container"></div>
+        </div>
+    </div>
         <script>
-            const totalCells = 460;
+            const totalCells = 143;
             let html = '';
             for (let i = 1; i <= totalCells; i++) {
               html += `<div class="cell" id="cell${i}"></div>\n`;
@@ -23,8 +26,12 @@
             document.getElementById('container').innerHTML = html;
           </script> 
     </div>
+    <div id="counter-container">
+        <p>Capital de Gracias: <span id="cell-counter">0</span></p>
+    </div>
 </div>
           <script src="script.js"></script>
+        
 </body>
 
 </html>
